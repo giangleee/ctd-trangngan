@@ -137,9 +137,15 @@ Token* getToken(void) {
     token = makeToken(SB_MINUS, lineNo, colNo);
     readChar(); 
     return token;
-  case CHAR_TIMES:
-    token = makeToken(SB_TIMES, lineNo, colNo);
+  case CHAR_TIMES:  //them **
+    ln = lineNo;
+    cn = colNo; 
     readChar(); 
+    if ((currentChar != EOF) && (charCodes[currentChar] == CHAR_TIMES)) {
+      readChar();
+      return makeToken(SB_POWER, ln, cn);
+    } else return makeToken(SB_TIMES, ln, cn);
+    
     return token;
   case CHAR_SLASH:
     token = makeToken(SB_SLASH, lineNo, colNo);
@@ -296,6 +302,7 @@ void printToken(Token *token) {
   case SB_RPAR: printf("SB_RPAR\n"); break;
   case SB_LSEL: printf("SB_LSEL\n"); break;
   case SB_RSEL: printf("SB_RSEL\n"); break;
+  case SB_POWER: printf("SB_POWER\n"); break; //in ra man hinh
   }
 }
 

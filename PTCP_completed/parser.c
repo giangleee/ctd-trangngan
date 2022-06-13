@@ -530,9 +530,14 @@ void compileTerm(void) {
   compileFactor();
   compileTerm2();
 }
-
+//them luat term2 ::= SB_POWER factor term2
 void compileTerm2(void) {
   switch (lookAhead->tokenType) {
+  case SB_POWER:
+    eat(SB_POWER);
+    compileFactor();
+    compileTerm2();
+    break;
   case SB_TIMES:
     eat(SB_TIMES);
     compileFactor();
